@@ -32,11 +32,12 @@ int darkelf_buff[NUMERO_DE_ATRIBUTOS] = {0};
 int raca_rand;
 int atributo;
 //Funcão principal.
-void main()
+int main()
 {
     //Declarando funções.
     void rodardados();
     void print_atributo(int atributo_escolhido);
+    void caracteristicas_personagens();
     //Variáveis
     srand(time(NULL));
     FILE *txt_ficha;
@@ -108,8 +109,12 @@ void main()
                 printf("| Inteligencia:\t%d\n", inteligencia);
                 printf("| Sabedoria:\t%d\n", sabedoria);
                 printf("| Carisma:\t%d\n", carisma);
-                printf("| \n");
-                printf("| 1- Gerar outra ficha.\n| 2- Salvar ficha\n| 3- Voltar do menu\n");
+                printf("|\n");
+                caracteristicas_personagens();
+                printf("|\n");
+                printf("| 1- Gerar outra ficha.\n");
+                printf("| 2- Salvar ficha\n");
+                printf("| 3- Voltar do menu\n");
                 printf("|>   ");
                 scanf("%d", &escolha);
                 switch (escolha)
@@ -210,8 +215,8 @@ void main()
                     {
                         print_atributo(atributo);
                         scanf("%d", &humano_buff[atributo]);
-                        setar_buff = false;
                     }
+                    setar_buff = false;
                     break;
                 case 4:
                     system("cls");
@@ -359,5 +364,135 @@ void print_atributo(int atributo_escolhido)
     case 5:
         printf("|> Escolha a carisma: ");
         break;
+    }
+}
+
+void caracteristicas_personagens()
+{
+    // forca
+    if (forca >= 20)
+    {
+        printf("| [Extremamente forte fisicamente]\n");
+    }
+    else if (forca >= 16)
+    {
+        printf("| [Muito forte fisicamente]\n");
+    }
+    else if (forca >= 10)
+    {
+        printf("| [Forca normal]\n");
+    }
+    else if (forca >= 5)
+    {
+        printf("| [Fraco fisicamente]\n");
+    }
+    else
+    {
+        printf("| [Sem forca fisica alguma]\n");
+    }
+    // destreza
+    if (destreza <= 0)
+    {
+        printf("| [Mal consegue se mover]\n");
+    }
+    else if (destreza <= 5)
+    {
+        printf("| [Movimentacao debilitada]\n");
+    }
+    else if (destreza <= 10)
+    {
+        printf("| [Movimentacao normal]\n");
+    }
+    else if (destreza <= 16)
+    {
+        printf("| [Movimentcao rapida]\n");
+    }
+    else if (destreza <= 20)
+    {
+        printf("| [Super rapido]\n");
+    }
+    // constituição
+    if (constuicao <= 0)
+    {
+        printf("| [Nao tem corpo fisico]\n");
+    }
+    else if (constuicao <= 5)
+    {
+        printf("| [Corpo fragil]\n");
+    }
+    else if (constuicao <= 10)
+    {
+        printf("| [Corpo normal]\n");
+    }
+    else if (constuicao <= 16)
+    {
+        printf("| [Corpo muito resistente]\n");
+    }
+    else if (constuicao <= 20)
+    {
+        printf("| [Corpo extremamente resistente]\n");
+    }
+    // inteligencia
+    if (inteligencia <= 0)
+    {
+        printf("| [Sem capacidade cognitiva]\n");
+    }
+    else if (inteligencia <= 5)
+    {
+        printf("| [Desprovido de inteligencia]\n");
+    }
+    else if (inteligencia <= 10)
+    {
+        printf("| [Tem um bom raciocinio]\n");
+    }
+    else if (inteligencia <= 16)
+    {
+        printf("| [Muito inteligente]\n");
+    }
+    else if (inteligencia <= 20)
+    {
+        printf("| [Extremamente inteligencia]\n");
+    }
+    // sabedoria
+    if (sabedoria <= 0)
+    {
+        printf("| [Sem tato para perceber o mundo ao seu redor]\n");
+    }
+    else if (sabedoria <= 5)
+    {
+        printf("| [Pouca percepcao do mundo]\n");
+    }
+    else if (sabedoria <= 10)
+    {
+        printf("| [Consegue perseber o mundo ao seu redor]\n");
+    }
+    else if (sabedoria <= 16)
+    {
+        printf("| [Tem uma boa nocao da situacao em que esta inserido]\n");
+    }
+    else if (sabedoria <= 20)
+    {
+        printf("| [Consegue compreender todas nuancias de cada evento]\n");
+    }
+    // carisma
+    if (carisma <= 0)
+    {
+        printf("| [Assustador]\n");
+    }
+    else if (carisma <= 5)
+    {
+        printf("| [Pouco carismatico]\n");
+    }
+    else if (carisma <= 10)
+    {
+        printf("| [Aprencia normal]\n");
+    }
+    else if (carisma <= 16)
+    {
+        printf("| [Transparece confiança]\n");
+    }
+    else if (carisma <= 20)
+    {
+        printf("| [Muito atraente e confiante]\n");
     }
 }

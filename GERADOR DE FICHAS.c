@@ -2,9 +2,16 @@
 #include <stdio.h>
 #include <time.h>
 #include <stdbool.h>
+//Raças
+#define ANAO 1
+#define ELFOS 2
+#define HUMANO 3
+#define ORC 4
+#define GIGANTE 5
+#define DARKELF 6
 // Constantes
 #define NUMERO_DE_ATRIBUTOS 6
-#define CARACTER_CLASSE 184
+#define CARACTER_CLASSE 4
 // Rodar dados
 #define RODAR_D3 rand() % 3 + 1
 #define RODAR_D6 rand() % 6 + 1
@@ -44,7 +51,7 @@ int main()
     FILE *txt_ficha;
     int d20, quantidade_de_dados;
     int escolha;
-    bool programa = true, rodar_dados_novamente, rodando_d20 = false, gerar_raca = true, raca_aleatoria = true, setar_buff = true;
+    bool programa = true, rodar_dados_novamente, rodando_d20 = false, gerar_raca = true, raca_aleatoria = true, setar_buff = true, escolher_raca = true;
     //Programa
     while (programa)
     {
@@ -70,18 +77,32 @@ int main()
                 switch (escolha)
                 {
                 case 1: // Escolher raca
-                    system("cls");
-                    printf("| Qual raça deseja travar?\n");
-                    printf("| 1 - Anao\n");
-                    printf("| 2 - Elfos\n");
-                    printf("| 3 - Humano\n");
-                    printf("| 4 - Orc\n");
-                    printf("| 5 - Gigante\n");
-                    printf("| 6 - DarkElf\n");
-                    printf("| > ");
-                    scanf("%d", &raca_rand);
-                    gerar_raca = false;
-                    raca_aleatoria = false;
+                    do
+                    {
+                        system("cls");
+                        printf("| Qual raca deseja travar?\n");
+                        printf("| 1 - Anao\n");
+                        printf("| 2 - Elfos\n");
+                        printf("| 3 - Humano\n");
+                        printf("| 4 - Orc\n");
+                        printf("| 5 - Gigante\n");
+                        printf("| 6 - DarkElf\n");
+                        printf("| > ");
+                        scanf("%d", &raca_rand);
+                        if (raca_rand > 6 || raca_rand < 1)
+                        {
+                            system("cls");
+                            printf("| ERRO DIGITE UMA OPCAO VALIDA\n");
+                            system("PAUSE");
+                            escolher_raca = true;
+                        }
+                        else
+                        {
+                            gerar_raca = false;
+                            raca_aleatoria = false;
+                            escolher_raca = false;
+                        }
+                    } while (escolher_raca);
                     break;
                 case 2: // Gerar raça aleatoria
                     raca_aleatoria = true;
@@ -112,6 +133,8 @@ int main()
                 printf("| Carisma:\t%d\n", carisma);
                 printf("|\n");
                 caracteristicas_personagens();
+                printf("|\n");
+                printar_classes();
                 printf("|\n");
                 printf("| 1- Gerar outra ficha.\n");
                 printf("| 2- Salvar ficha\n");
@@ -172,7 +195,7 @@ int main()
                 }
             } while (rodando_d20);
             break;
-        case 3:
+        case 3: // Setar buffs
             do
             {
                 system("cls");
@@ -188,7 +211,7 @@ int main()
                 scanf("%d", &escolha);
                 switch (escolha)
                 {
-                case 1:
+                case ANAO:
                     system("cls");
                     printf("|> ATRIBUTOS ANAO\n");
                     for (atributo = 0; atributo < NUMERO_DE_ATRIBUTOS; atributo++)
@@ -285,7 +308,7 @@ void rodardados()
     // Buffs
     switch (raca_rand)
     {
-    case 1: // Anão
+    case ANAO: // Anão
         sprintf(raca, "Anao");
         forca += anao_buff[FORCA_BUFF];
         destreza += anao_buff[DESTREZA_BUFF];
@@ -294,7 +317,7 @@ void rodardados()
         sabedoria += anao_buff[SABEDORIA_BUFF];
         carisma += anao_buff[CARISMA_BUFF];
         break;
-    case 2: // Elfos
+    case ELFOS: // Elfos
         sprintf(raca, "Elfos");
         forca += elfos_buff[FORCA_BUFF];
         destreza += elfos_buff[DESTREZA_BUFF];
@@ -303,7 +326,7 @@ void rodardados()
         sabedoria += elfos_buff[SABEDORIA_BUFF];
         carisma += elfos_buff[CARISMA_BUFF];
         break;
-    case 3: // Humano
+    case HUMANO: // Humano
         sprintf(raca, "Humano");
         forca += humano_buff[FORCA_BUFF];
         destreza += humano_buff[DESTREZA_BUFF];
@@ -312,7 +335,7 @@ void rodardados()
         sabedoria += humano_buff[SABEDORIA_BUFF];
         carisma += humano_buff[CARISMA_BUFF];
         break;
-    case 4: // Orc
+    case ORC: // Orc
         sprintf(raca, "Ogro");
         forca += ogro_buff[FORCA_BUFF];
         destreza += ogro_buff[DESTREZA_BUFF];
@@ -321,7 +344,7 @@ void rodardados()
         sabedoria += ogro_buff[SABEDORIA_BUFF];
         carisma += ogro_buff[CARISMA_BUFF];
         break;
-    case 5: // Gigante
+    case GIGANTE: // Gigante
         sprintf(raca, "Gigante");
         forca += gigante_buff[FORCA_BUFF];
         destreza += gigante_buff[DESTREZA_BUFF];
@@ -330,7 +353,7 @@ void rodardados()
         sabedoria += gigante_buff[SABEDORIA_BUFF];
         carisma += gigante_buff[CARISMA_BUFF];
         break;
-    case 6: // DarkElf
+    case DARKELF: // DarkElf
         sprintf(raca, "DarkElf");
         forca += darkelf_buff[FORCA_BUFF];
         destreza += darkelf_buff[DESTREZA_BUFF];
@@ -499,9 +522,98 @@ void caracteristicas_personagens()
 
 void printar_classes()
 {
-    //caçador
-    if(forca >= 10 && destreza >= 15)
+    //Caçador
+    if (forca >= 10 && destreza >= 15 && raca_rand != GIGANTE && raca_rand != ANAO && raca_rand != ORC)
     {
-        printf("| [%c]",CARACTER_CLASSE);
+        printf("| [%c] Cacador experiente\n", CARACTER_CLASSE);
+    }
+    else if (forca >= 5 && destreza >= 9 && raca_rand != GIGANTE && raca_rand != ANAO && raca_rand != ORC)
+    {
+        printf("| [%c] Cacador\n", CARACTER_CLASSE);
+    }
+    //Mago
+    if (inteligencia >= 15 && sabedoria >= 11 && raca_rand != GIGANTE && raca_rand != ANAO && raca_rand != ORC)
+    {
+        if (raca_rand == ELFOS)
+        {
+            printf("| [%c] Mago da luz experiente\n", CARACTER_CLASSE);
+        }
+        else if (raca_rand == DARKELF)
+        {
+            printf("| [%c] Mago das trevas experiente\n", CARACTER_CLASSE);
+        }
+        else
+        {
+            printf("| [%c] Mago experiente\n", CARACTER_CLASSE);
+        }
+    }
+    else if (inteligencia >= 9 && sabedoria >= 5 && raca_rand != GIGANTE && raca_rand != ANAO && raca_rand != ORC)
+    {
+        if (raca_rand == ELFOS)
+        {
+            printf("| [%c] Mago branco\n", CARACTER_CLASSE);
+        }
+        else if (raca_rand == DARKELF)
+        {
+            printf("| [%c] Mago das trevas\n", CARACTER_CLASSE);
+        }
+        else
+        {
+            printf("| [%c] Mago\n", CARACTER_CLASSE);
+        }
+    }
+    //Guerreiro tank
+    if (forca >= 15 && constuicao >= 10 && raca_rand != ELFOS && raca_rand != DARKELF)
+    {
+        if (raca_rand == ORC && inteligencia > 10)
+        {
+            printf("| [%c] Guerreiro chama experiente\n");
+        }
+        else
+        {
+            printf("| [%c] Guerreiro experiente\n", CARACTER_CLASSE);
+        }
+    }
+    else if (forca >= 10 && constuicao >= 7 && raca_rand != ELFOS && raca_rand != DARKELF)
+    {
+        if (raca_rand == ORC && inteligencia > 10)
+        {
+            printf("| [%c] Guerreiro chama\n");
+        }
+        else
+        {
+            printf("| [%c] Guerreiro\n", CARACTER_CLASSE);
+        }
+    }
+    //Assasino
+    if (inteligencia >= 13 && destreza >= 15 && raca_rand != GIGANTE && raca_rand != ANAO && raca_rand != ORC)
+    {
+        if (raca_rand == ELFOS)
+        {
+            printf("| [%c] Assasino da floresta experiente\n");
+        }
+        else if (raca_rand == DARKELF)
+        {
+            printf("| [%c] Assasino das sombras experiente\n", CARACTER_CLASSE);
+        }
+        else
+        {
+            printf("| [%c] Assasino experiente\n", CARACTER_CLASSE);
+        }
+    }
+    else if (inteligencia >= 9 && destreza >= 10 && raca_rand != GIGANTE && raca_rand != ANAO && raca_rand != ORC)
+    {
+        if (raca_rand == ELFOS)
+        {
+            printf("| [%c] Assasino da floresta\n");
+        }
+        else if (raca_rand == DARKELF)
+        {
+            printf("| [%c] Assasino das sombras\n", CARACTER_CLASSE);
+        }
+        else
+        {
+            printf("| [%c] Assasino\n", CARACTER_CLASSE);
+        }
     }
 }

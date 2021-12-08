@@ -590,7 +590,7 @@ void printar_classes()
     {
         if (raca_rand == ORC && inteligencia > 10)
         {
-            printf("| [%c] Guerreiro chama experiente\n");
+            printf("| [%c] Guerreiro xama experiente\n",CARACTER_CLASSE);
         }
         else
         {
@@ -601,7 +601,7 @@ void printar_classes()
     {
         if (raca_rand == ORC && inteligencia > 10)
         {
-            printf("| [%c] Guerreiro chama\n");
+            printf("| [%c] Guerreiro chama\n",CARACTER_CLASSE);
         }
         else
         {
@@ -613,7 +613,7 @@ void printar_classes()
     {
         if (raca_rand == ELFOS)
         {
-            printf("| [%c] Assasino da floresta experiente\n");
+            printf("| [%c] Assasino da floresta experiente\n",CARACTER_CLASSE);
         }
         else if (raca_rand == DARKELF)
         {
@@ -628,7 +628,7 @@ void printar_classes()
     {
         if (raca_rand == ELFOS)
         {
-            printf("| [%c] Assasino da floresta\n");
+            printf("| [%c] Assasino da floresta\n,",CARACTER_CLASSE);
         }
         else if (raca_rand == DARKELF)
         {

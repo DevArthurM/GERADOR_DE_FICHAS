@@ -191,8 +191,7 @@ int main()
                     printf("| 1 - Sim\n");
                     printf("| 2 - Nao\n");
                     scanf("%d", &escolha);
-                    switch (escolha)
-                    {
+                    switch (escolha){
                     case 1:
                         rodando_d20 = true;
                         break;
@@ -212,7 +211,7 @@ int main()
                     break;
                 default:
                         system("cls");
-                        printf("| ERRO! ESCOLHA INVALIDA");
+                        printf("| ERRO! ESCOLHA INVALIDA\n");
                         rodando_d20 = true;
                         system("PAUSE");
                     break;

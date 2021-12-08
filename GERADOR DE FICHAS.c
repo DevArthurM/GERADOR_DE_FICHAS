@@ -46,10 +46,11 @@ int main()
     void rodardados();
     void print_atributo(int atributo_escolhido);
     void caracteristicas_personagens();
+    int rodarDadosMesa(int tipo);
     //Variáveis
     srand(time(NULL));
     FILE *txt_ficha;
-    int d20, quantidade_de_dados;
+    int d20, quantidade_de_dados, tipo_de_dados;
     int escolha;
     bool programa = true, rodar_dados_novamente, rodando_d20 = false, gerar_raca = true, raca_aleatoria = true, setar_buff = true, escolher_raca = true;
     //Programa
@@ -137,8 +138,7 @@ int main()
                 printar_classes();
                 printf("|\n");
                 printf("| 1- Gerar outra ficha.\n");
-                printf("| 2- Salvar ficha\n");
-                printf("| 3- Voltar do menu\n");
+                printf("| 2- Voltar do menu\n");
                 printf("|>   ");
                 scanf("%d", &escolha);
                 switch (escolha)
@@ -147,10 +147,6 @@ int main()
                     rodar_dados_novamente = true;
                     break;
                 case 2: // Salvar ficha
-                    txt_ficha = fopen("ficha.txt", "w");
-                    fprintf(txt_ficha, "Teste");
-                    break;
-                case 3: // Voltar no menu
                     rodar_dados_novamente = false;
                     break;
                 default:
@@ -165,32 +161,60 @@ int main()
             do //Rodar d20
             {
                 system("cls");
-                printf("| Quantos d20 deseja rodar?\n");
+                printf("| Qual tipo de dado deseja rodar?\n");
+                printf("|1 - D3\n");
+                printf("|2 - D6\n");
+                printf("|3 - D7\n");
+                printf("|4 - D8\n");
+                printf("|5 - D20\n");
+                printf("|6 - Voltar\n");
                 printf("|> ");
-                scanf("%d", &quantidade_de_dados);
-                system("cls");
-                printf("|NUMERO DO DADO\t\t\tNUMERO\n");
-                for (int cont = 0; cont <= quantidade_de_dados - 1; cont++)
-                {
-                    d20 = RODAR_D20;
-                    printf("|> %d\t\t\t\t%d\n", cont + 1, d20);
-                }
-                printf("| Deseja rodar mais dados?\n");
-                printf("|> 1 - Sim 2 - Nao\n");
-                printf("| ");
-                scanf("%d", &escolha);
-                switch (escolha)
+                scanf("%d", &tipo_de_dados);
+                switch (tipo_de_dados)
                 {
                 case 1:
-                    rodando_d20 = true;
-                    break;
                 case 2:
-                    rodando_d20 = false;
+                case 3:
+                case 4:
+                case 5:
+                    system("cls");
+                    printf("| Quantos dados deseja rodar?\n");
+                    printf("|> ");
+                    scanf("%d", &quantidade_de_dados);
+                    system("cls");
+                    printf("|NUMERO\t\tDADO\n");
+                    for (int cont = 1; cont <= quantidade_de_dados; cont++)
+                    {
+                        printf("|%d\t\t%d\n", cont, rodarDadosMesa(tipo_de_dados));
+                    }
+                    printf("| Deseja rodar novamente?\n");
+                    printf("| 1 - Sim\n");
+                    printf("| 2 - Nao\n");
+                    scanf("%d", &escolha);
+                    switch (escolha)
+                    {
+                    case 1:
+                        rodando_d20 = true;
+                        break;
+                    case 2:
+                        rodando_d20 = false;
+                        break;
+                    default:
+                        system("cls");
+                        printf("| ERRO! ESCOLHA INVALIDA\n");
+                        rodando_d20 = false;
+                        system("PAUSE");
+                        break;
+                    }
+                    break;
+                case 6:                        
+                        rodando_d20 = false;
                     break;
                 default:
-                    system("cls");
-                    printf("| ERRO DIGITE UMA OPCAO VALIDA\n");
-                    system("PAUSE");
+                        system("cls");
+                        printf("| ERRO! ESCOLHA INVALIDA");
+                        rodando_d20 = true;
+                        system("PAUSE");
                     break;
                 }
             } while (rodando_d20);
@@ -615,5 +639,26 @@ void printar_classes()
         {
             printf("| [%c] Assasino\n", CARACTER_CLASSE);
         }
+    }
+}
+int rodarDadosMesa(int tipo)
+{
+    switch (tipo)
+    {
+    case 1:
+        return RODAR_D3;
+        break;
+    case 2:
+        return RODAR_D6;
+        break;
+    case 3:
+        return RODAR_D8;
+        break;
+    case 4:
+        return RODAR_D10;
+        break;
+    case 5:
+        return RODAR_D20;
+        break;
     }
 }

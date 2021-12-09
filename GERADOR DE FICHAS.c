@@ -13,7 +13,7 @@
 #define DARKELF 6
 // Constantes
 #define NUMERO_DE_ATRIBUTOS 6
-#define CARACTER_CLASSE 4
+#define CARACTER_CLASSE 184
 // Rodar dados
 #define RODAR_D3 rand() % 3 + 1
 #define RODAR_D6 rand() % 6 + 1
@@ -44,16 +44,61 @@ int humano_buff[NUMERO_DE_ATRIBUTOS] = {0};
 int ogro_buff[NUMERO_DE_ATRIBUTOS] = {0};
 int gigante_buff[NUMERO_DE_ATRIBUTOS] = {0};
 int darkelf_buff[NUMERO_DE_ATRIBUTOS] = {0};
+
 // Gerador de Raças & Buffs
 int raca_rand;
 int atributo;
 //Funcão principal.
 int main()
 {
+    //Setando buff's
+    //Anao;
+    anao_buff[FORCA_BUFF] = 5;
+    anao_buff[DESTREZA_BUFF] = -4;
+    anao_buff[CONSTUICAO_BUFF] = 5;
+    anao_buff[INTELIGENCIA_BUFF] = 4;
+    anao_buff[SABEDORIA_BUFF] = -5;
+    anao_buff[CARISMA_BUFF] = -8;
+    //Elfos
+    elfos_buff[FORCA_BUFF] = -5;
+    elfos_buff[DESTREZA_BUFF] = 5;
+    elfos_buff[CONSTUICAO_BUFF] = -3;
+    elfos_buff[INTELIGENCIA_BUFF] = 5;
+    elfos_buff[SABEDORIA_BUFF] = 1;
+    elfos_buff[CARISMA_BUFF] = 5;
+    //Humano
+    humano_buff[FORCA_BUFF] = 2;
+    humano_buff[DESTREZA_BUFF] = 2;
+    humano_buff[CONSTUICAO_BUFF] = 2;
+    humano_buff[INTELIGENCIA_BUFF] = 2;
+    humano_buff[SABEDORIA_BUFF] = 2;
+    humano_buff[CARISMA_BUFF] = 2;
+    //Ogro
+    ogro_buff[FORCA_BUFF] = 8;
+    ogro_buff[DESTREZA_BUFF] = -5;
+    ogro_buff[CONSTUICAO_BUFF] = 5;
+    ogro_buff[INTELIGENCIA_BUFF] = -5;
+    ogro_buff[SABEDORIA_BUFF] = -3;
+    ogro_buff[CARISMA_BUFF] = -7;
+    //Gigante
+    gigante_buff[FORCA_BUFF] = 8;
+    gigante_buff[DESTREZA_BUFF] = -5;
+    gigante_buff[CONSTUICAO_BUFF] = 9;
+    gigante_buff[INTELIGENCIA_BUFF] = -6;
+    gigante_buff[SABEDORIA_BUFF] = -5;
+    gigante_buff[CARISMA_BUFF] = -7;
+    //DarkElf
+    darkelf_buff[FORCA_BUFF] = -5;
+    darkelf_buff[DESTREZA_BUFF] = 5;
+    darkelf_buff[CONSTUICAO_BUFF] = -3;
+    darkelf_buff[INTELIGENCIA_BUFF] = 5;
+    darkelf_buff[SABEDORIA_BUFF] = 1;
+    darkelf_buff[CARISMA_BUFF] = 5;
     //Declarando funções.
-    void rodardados();
-    void print_atributo(int atributo_escolhido);
     void caracteristicas_personagens();
+    void checharZeros();
+    void rodarDados();
+    void print_atributo(int atributo_escolhido);
     int rodarDadosMesa(int tipo);
     int testarGenero(int sexo_gerado);
     //Variáveis
@@ -133,9 +178,10 @@ int main()
                     raca_rand = rand() % 6 + 1;
                 }
                 system("cls");
-                rodardados();
+                rodarDados();
+                checharZeros();
                 printf("| Raca:\t\t%s\n", raca);
-                printf("| Genero: %c\n",testarGenero(sexo));
+                printf("| Genero:\t%c\n", testarGenero(sexo));
                 printf("| Forca:\t%d\n", forca);
                 printf("| Destreza:\t%d\n", destreza);
                 printf("| Constitucao:\t%d\n", constuicao);
@@ -174,8 +220,8 @@ int main()
                 printf("| Qual tipo de dado deseja rodar?\n");
                 printf("|1 - D3\n");
                 printf("|2 - D6\n");
-                printf("|3 - D7\n");
-                printf("|4 - D8\n");
+                printf("|3 - D8\n");
+                printf("|4 - D10\n");
                 printf("|5 - D20\n");
                 printf("|6 - Voltar\n");
                 printf("|> ");
@@ -240,7 +286,8 @@ int main()
                 printf("| 4 - Orc\n");
                 printf("| 5 - Gigante\n");
                 printf("| 6 - DarkElf\n");
-                printf("| 7 - VOLTAR AO MENU\n");
+                printf("| 7 - USAR BUFFS PADROES DE RACA\n");
+                printf("| 8 - VOLTAR AO MENU\n");
                 printf("| > ");
                 scanf("%d", &escolha);
                 switch (escolha)
@@ -255,7 +302,7 @@ int main()
                         setar_buff = false;
                     }
                     break;
-                case 2:
+                case ELFOS:
                     system("cls");
                     printf("|> ATRIBUTOS ELFO\n");
                     for (atributo = 0; atributo < NUMERO_DE_ATRIBUTOS; atributo++)
@@ -265,7 +312,7 @@ int main()
                         setar_buff = false;
                     }
                     break;
-                case 3:
+                case HUMANO:
                     system("cls");
                     printf("|> ATRIBUTOS HUMANO\n");
                     for (atributo = 0; atributo < NUMERO_DE_ATRIBUTOS; atributo++)
@@ -275,7 +322,7 @@ int main()
                     }
                     setar_buff = false;
                     break;
-                case 4:
+                case ORC:
                     system("cls");
                     printf("|> ATRIBUTOS OGRO\n");
                     for (atributo = 0; atributo < NUMERO_DE_ATRIBUTOS; atributo++)
@@ -285,7 +332,7 @@ int main()
                         setar_buff = false;
                     }
                     break;
-                case 5:
+                case GIGANTE:
                     system("cls");
                     printf("|> ATRIBUTOS GIGANTE\n");
                     for (atributo = 0; atributo < NUMERO_DE_ATRIBUTOS; atributo++)
@@ -295,7 +342,7 @@ int main()
                         setar_buff = false;
                     }
                     break;
-                case 6:
+                case DARKELF:
                     system("cls");
                     printf("|> ATRIBUTOS DARK ELF\n");
                     for (atributo = 0; atributo < NUMERO_DE_ATRIBUTOS; atributo++)
@@ -306,6 +353,53 @@ int main()
                     }
                     break;
                 case 7:
+                    //Anao
+                    anao_buff[FORCA_BUFF] = 5;
+                    anao_buff[DESTREZA_BUFF] = -4;
+                    anao_buff[CONSTUICAO_BUFF] = 5;
+                    anao_buff[INTELIGENCIA_BUFF] = 4;
+                    anao_buff[SABEDORIA_BUFF] = -5;
+                    anao_buff[CARISMA_BUFF] = -8;
+                    //Elfos
+                    elfos_buff[FORCA_BUFF] = -5;
+                    elfos_buff[DESTREZA_BUFF] = 5;
+                    elfos_buff[CONSTUICAO_BUFF] = -3;
+                    elfos_buff[INTELIGENCIA_BUFF] = 5;
+                    elfos_buff[SABEDORIA_BUFF] = 1;
+                    elfos_buff[CARISMA_BUFF] = 5;
+                    //Humano
+                    humano_buff[FORCA_BUFF] = 2;
+                    humano_buff[DESTREZA_BUFF] = 2;
+                    humano_buff[CONSTUICAO_BUFF] = 2;
+                    humano_buff[INTELIGENCIA_BUFF] = 2;
+                    humano_buff[SABEDORIA_BUFF] = 2;
+                    humano_buff[CARISMA_BUFF] = 2;
+                    //Ogro
+                    ogro_buff[FORCA_BUFF] = 8;
+                    ogro_buff[DESTREZA_BUFF] = -5;
+                    ogro_buff[CONSTUICAO_BUFF] = 5;
+                    ogro_buff[INTELIGENCIA_BUFF] = -5;
+                    ogro_buff[SABEDORIA_BUFF] = -3;
+                    ogro_buff[CARISMA_BUFF] = -7;
+                    //Gigante
+                    gigante_buff[FORCA_BUFF] = 8;
+                    gigante_buff[DESTREZA_BUFF] = -5;
+                    gigante_buff[CONSTUICAO_BUFF] = 9;
+                    gigante_buff[INTELIGENCIA_BUFF] = -6;
+                    gigante_buff[SABEDORIA_BUFF] = -5;
+                    gigante_buff[CARISMA_BUFF] = -7;
+                    //DarkElf
+                    darkelf_buff[FORCA_BUFF] = -5;
+                    darkelf_buff[DESTREZA_BUFF] = 5;
+                    darkelf_buff[CONSTUICAO_BUFF] = -3;
+                    darkelf_buff[INTELIGENCIA_BUFF] = 5;
+                    darkelf_buff[SABEDORIA_BUFF] = 1;
+                    darkelf_buff[CARISMA_BUFF] = 5;
+                    system("cls");
+                    printf("| BUFFS SETADOS.\n");
+                    system("PAUSE");
+                    break;
+                case 8:
                     setar_buff = false;
                     break;
                 default:
@@ -331,7 +425,42 @@ int main()
     }
 }
 
-void rodardados()
+void checharZeros()
+{
+        //forca
+    if(forca <= 0)
+    {
+        forca = 1;
+    }
+    //destreza
+    if(destreza <= 0)
+    {
+        destreza = 1;
+    }
+    //constuicao
+    if(constuicao <= 0)
+    {
+        constuicao = 1;
+    }
+    //inteligencia
+    if(inteligencia <= 0)
+    {
+        inteligencia = 1;
+    }
+    //sabedoria
+    if(sabedoria <= 0)
+    {
+        sabedoria = 1;
+    }
+    //carisma
+    if(carisma <= 0)
+    {
+        carisma = 1;
+    }
+    // Buffs
+}
+
+void rodarDados()
 {
     sexo = RODAR_D20;
     forca = RODAR_D20;
@@ -558,16 +687,16 @@ void caracteristicas_personagens()
 void printar_classes()
 {
     //Caçador
-    if (forca >= 10 && destreza >= 15 && raca_rand != GIGANTE && raca_rand != ANAO && raca_rand != ORC)
+    if (forca >= 10 && destreza >= 15 && raca_rand != (GIGANTE || ANAO || ORC))
     {
         printf("| [%c] Cacador experiente\n", CARACTER_CLASSE);
     }
-    else if (forca >= 5 && destreza >= 9 && raca_rand != GIGANTE && raca_rand != ANAO && raca_rand != ORC)
+    else if (forca >= 5 && destreza >= 9 && raca_rand != (GIGANTE || ANAO || ORC))
     {
         printf("| [%c] Cacador\n", CARACTER_CLASSE);
     }
     //Mago
-    if (inteligencia >= 15 && sabedoria >= 11 && raca_rand != GIGANTE && raca_rand != ANAO && raca_rand != ORC)
+    if (inteligencia >= 15 && sabedoria >= 11 && raca_rand != (GIGANTE || ANAO || ORC))
     {
         if (raca_rand == ELFOS)
         {
@@ -582,7 +711,7 @@ void printar_classes()
             printf("| [%c] Mago experiente\n", CARACTER_CLASSE);
         }
     }
-    else if (inteligencia >= 9 && sabedoria >= 5 && raca_rand != GIGANTE && raca_rand != ANAO && raca_rand != ORC)
+    else if (inteligencia >= 9 && sabedoria >= 5 && raca_rand != (GIGANTE || ANAO || ORC))
     {
         if (raca_rand == ELFOS)
         {
@@ -598,7 +727,7 @@ void printar_classes()
         }
     }
     //Guerreiro tank
-    if (forca >= 15 && constuicao >= 10 && raca_rand != ELFOS && raca_rand != DARKELF)
+    if (forca >= 15 && constuicao >= 10 && raca_rand != (ELFOS || DARKELF))
     {
         if (raca_rand == ORC && inteligencia > 10)
         {
@@ -609,7 +738,7 @@ void printar_classes()
             printf("| [%c] Guerreiro experiente\n", CARACTER_CLASSE);
         }
     }
-    else if (forca >= 10 && constuicao >= 7 && raca_rand != ELFOS && raca_rand != DARKELF)
+    else if (forca >= 10 && constuicao >= 7 && raca_rand != (ELFOS || DARKELF))
     {
         if (raca_rand == ORC && inteligencia > 10)
         {
@@ -621,7 +750,7 @@ void printar_classes()
         }
     }
     //Assasino
-    if (inteligencia >= 13 && destreza >= 15 && raca_rand != GIGANTE && raca_rand != ANAO && raca_rand != ORC)
+    if (inteligencia >= 13 && destreza >= 15 && raca_rand != (GIGANTE || ANAO || ORC))
     {
         if (raca_rand == ELFOS)
         {
@@ -636,11 +765,11 @@ void printar_classes()
             printf("| [%c] Assasino experiente\n", CARACTER_CLASSE);
         }
     }
-    else if (inteligencia >= 9 && destreza >= 10 && raca_rand != GIGANTE && raca_rand != ANAO && raca_rand != ORC)
+    else if (inteligencia >= 9 && destreza >= 10 && raca_rand != (GIGANTE || ANAO || ORC))
     {
         if (raca_rand == ELFOS)
         {
-            printf("| [%c] Assasino da floresta\n,", CARACTER_CLASSE);
+            printf("| [%c] Assasino da floresta\n", CARACTER_CLASSE);
         }
         else if (raca_rand == DARKELF)
         {
@@ -652,7 +781,7 @@ void printar_classes()
         }
     }
     //Necromante
-    if (inteligencia >= 13 && sabedoria >= 15 && carisma <= 5 && raca_rand != GIGANTE && raca_rand != ANAO)
+    if (inteligencia >= 13 && sabedoria >= 15 && carisma <= 5 && raca_rand != (GIGANTE || ORC))
     {
         if (raca_rand == ELFOS)
         {
@@ -667,7 +796,7 @@ void printar_classes()
             printf("| [%c] Necromante\n", CARACTER_CLASSE);
         }
     }
-    else if (inteligencia >= 9 && sabedoria >= 10 && carisma <= 5 && raca_rand != GIGANTE && raca_rand != ANAO)
+    else if (inteligencia >= 9 && sabedoria >= 10 && carisma <= 5 && raca_rand != (GIGANTE || ORC))
     {
         if (raca_rand == ELFOS)
         {
@@ -683,11 +812,11 @@ void printar_classes()
         }
     }
     //Curandeiro
-    if (inteligencia >= 13 && sabedoria >= 15 && carisma > 8 && raca_rand != GIGANTE && raca_rand != ANAO && raca_rand != ORC && raca_rand != DARKELF)
+    if (inteligencia >= 13 && sabedoria >= 15 && carisma > 8 && raca_rand != (GIGANTE || ANAO || ORC || DARKELF))
     {
         printf("| [%c] Curandeiro experiente.\n", CARACTER_CLASSE);
     }
-    else if (inteligencia >= 9 && sabedoria >= 10 && carisma > 8 && raca_rand != GIGANTE && raca_rand != ANAO && raca_rand != ORC && raca_rand != DARKELF)
+    else if (inteligencia >= 9 && sabedoria >= 10 && carisma > 8 && raca_rand != (GIGANTE || ANAO || ORC || DARKELF))
     {
         printf("| [%c] Curandeiro\n", CARACTER_CLASSE);
     }
@@ -716,10 +845,11 @@ int rodarDadosMesa(int tipo)
 
 int testarGenero(int sexo_gerado)
 {
-    if(sexo_gerado % 2 == 0)
+    if (sexo_gerado % 2 == 0)
     {
         return HOMEM;
-    }else
+    }
+    else
     {
         return MULHER;
     }

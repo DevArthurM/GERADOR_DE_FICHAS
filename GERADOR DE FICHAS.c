@@ -3,6 +3,8 @@
 #include <time.h>
 #include <stdbool.h>
 //Raças
+#define HOMEM 11
+#define MULHER 12
 #define ANAO 1
 #define ELFOS 2
 #define HUMANO 3
@@ -27,7 +29,13 @@
 #define CARISMA_BUFF 5
 //Variáveis Globais.
 //Atributos Globais
-int forca, destreza, constuicao, inteligencia, sabedoria, carisma;
+int sexo;
+int forca;
+int destreza;
+int constuicao;
+int inteligencia;
+int sabedoria;
+int carisma;
 char raca[8];
 //Buffs
 int anao_buff[NUMERO_DE_ATRIBUTOS] = {0};
@@ -47,6 +55,7 @@ int main()
     void print_atributo(int atributo_escolhido);
     void caracteristicas_personagens();
     int rodarDadosMesa(int tipo);
+    int testarGenero(int sexo_gerado);
     //Variáveis
     srand(time(NULL));
     FILE *txt_ficha;
@@ -70,7 +79,7 @@ int main()
             system("cls");
             do
             {
-                printf("| Deseja travar a raça?\n");
+                printf("| Deseja travar a raca?\n");
                 printf("| 1- Escolher raca\n");
                 printf("| 2- Gerar raca aleatoria.\n");
                 printf("|>   ");
@@ -126,6 +135,7 @@ int main()
                 system("cls");
                 rodardados();
                 printf("| Raca:\t\t%s\n", raca);
+                printf("| Genero: %c\n",testarGenero(sexo));
                 printf("| Forca:\t%d\n", forca);
                 printf("| Destreza:\t%d\n", destreza);
                 printf("| Constitucao:\t%d\n", constuicao);
@@ -191,7 +201,8 @@ int main()
                     printf("| 1 - Sim\n");
                     printf("| 2 - Nao\n");
                     scanf("%d", &escolha);
-                    switch (escolha){
+                    switch (escolha)
+                    {
                     case 1:
                         rodando_d20 = true;
                         break;
@@ -206,14 +217,14 @@ int main()
                         break;
                     }
                     break;
-                case 6:                        
-                        rodando_d20 = false;
+                case 6:
+                    rodando_d20 = false;
                     break;
                 default:
-                        system("cls");
-                        printf("| ERRO! ESCOLHA INVALIDA\n");
-                        rodando_d20 = true;
-                        system("PAUSE");
+                    system("cls");
+                    printf("| ERRO! ESCOLHA INVALIDA\n");
+                    rodando_d20 = true;
+                    system("PAUSE");
                     break;
                 }
             } while (rodando_d20);
@@ -322,6 +333,7 @@ int main()
 
 void rodardados()
 {
+    sexo = RODAR_D20;
     forca = RODAR_D20;
     destreza = RODAR_D20;
     constuicao = RODAR_D20;
@@ -590,7 +602,7 @@ void printar_classes()
     {
         if (raca_rand == ORC && inteligencia > 10)
         {
-            printf("| [%c] Guerreiro xama experiente\n",CARACTER_CLASSE);
+            printf("| [%c] Guerreiro xama experiente\n", CARACTER_CLASSE);
         }
         else
         {
@@ -601,7 +613,7 @@ void printar_classes()
     {
         if (raca_rand == ORC && inteligencia > 10)
         {
-            printf("| [%c] Guerreiro chama\n",CARACTER_CLASSE);
+            printf("| [%c] Guerreiro chama\n", CARACTER_CLASSE);
         }
         else
         {
@@ -613,7 +625,7 @@ void printar_classes()
     {
         if (raca_rand == ELFOS)
         {
-            printf("| [%c] Assasino da floresta experiente\n",CARACTER_CLASSE);
+            printf("| [%c] Assasino da floresta experiente\n", CARACTER_CLASSE);
         }
         else if (raca_rand == DARKELF)
         {
@@ -628,7 +640,7 @@ void printar_classes()
     {
         if (raca_rand == ELFOS)
         {
-            printf("| [%c] Assasino da floresta\n,",CARACTER_CLASSE);
+            printf("| [%c] Assasino da floresta\n,", CARACTER_CLASSE);
         }
         else if (raca_rand == DARKELF)
         {
@@ -638,6 +650,46 @@ void printar_classes()
         {
             printf("| [%c] Assasino\n", CARACTER_CLASSE);
         }
+    }
+    //Necromante
+    if (inteligencia >= 13 && sabedoria >= 15 && carisma <= 5 && raca_rand != GIGANTE && raca_rand != ANAO)
+    {
+        if (raca_rand == ELFOS)
+        {
+            printf("| [%c] Druida da floresta experiente.\n", CARACTER_CLASSE);
+        }
+        else if (raca_rand == DARKELF)
+        {
+            printf("| [%c] Feiticeiro da morte experiente\n", CARACTER_CLASSE);
+        }
+        else
+        {
+            printf("| [%c] Necromante\n", CARACTER_CLASSE);
+        }
+    }
+    else if (inteligencia >= 9 && sabedoria >= 10 && carisma <= 5 && raca_rand != GIGANTE && raca_rand != ANAO)
+    {
+        if (raca_rand == ELFOS)
+        {
+            printf("| [%c] Druida da floresta.\n", CARACTER_CLASSE);
+        }
+        else if (raca_rand == DARKELF)
+        {
+            printf("| [%c] Feiticeiro da morte\n", CARACTER_CLASSE);
+        }
+        else
+        {
+            printf("| [%c] Necromante\n", CARACTER_CLASSE);
+        }
+    }
+    //Curandeiro
+    if (inteligencia >= 13 && sabedoria >= 15 && carisma > 8 && raca_rand != GIGANTE && raca_rand != ANAO && raca_rand != ORC && raca_rand != DARKELF)
+    {
+        printf("| [%c] Curandeiro experiente.\n", CARACTER_CLASSE);
+    }
+    else if (inteligencia >= 9 && sabedoria >= 10 && carisma > 8 && raca_rand != GIGANTE && raca_rand != ANAO && raca_rand != ORC && raca_rand != DARKELF)
+    {
+        printf("| [%c] Curandeiro\n", CARACTER_CLASSE);
     }
 }
 int rodarDadosMesa(int tipo)
@@ -659,5 +711,16 @@ int rodarDadosMesa(int tipo)
     case 5:
         return RODAR_D20;
         break;
+    }
+}
+
+int testarGenero(int sexo_gerado)
+{
+    if(sexo_gerado % 2 == 0)
+    {
+        return HOMEM;
+    }else
+    {
+        return MULHER;
     }
 }
